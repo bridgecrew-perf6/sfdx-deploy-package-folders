@@ -52,13 +52,11 @@ export default class Org extends SfdxCommand {
     const project = await SfdxProject.resolve();
     const projectJson = await project.resolveProjectConfig();
     const packageDirectories = projectJson['packageDirectories']; // tslint:disable-line:no-any
-    const options: string = fs.readFileSync(this.flags.options, { encoding: 'utf-8' });
-    const username: string = fs.readFileSync(this.flags.username, { encoding: 'utf-8' });
 
     for (const packageConfig of packageDirectories as string[]) {
       // eslint-disable-next-line no-console
-      console.log('sfdx force:source:deploy -u ' + username + ' ' + options + ' --sourcepath ' + packageConfig);
-      await exec('sfdx force:source:deploy -u ' + username + ' ' + options + ' --sourcepath ' + packageConfig);
+      console.log('sfdx force:source:deploy -u ' + this.flags.username + ' ' + this.flags.options + ' --sourcepath ' + packageConfig);
+      await exec('sfdx force:source:deploy -u ' + this.flags.username + ' ' + this.flags.options + ' --sourcepath ' + packageConfig);
     }
     return;
   }
