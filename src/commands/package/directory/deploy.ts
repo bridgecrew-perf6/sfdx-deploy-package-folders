@@ -41,21 +41,20 @@ export default class Org extends SfdxCommand {
     }),
   };
 
-  // Comment this out if your command does not require an org username
-  protected static requiresUsername = true;
-
   // Set this to true if your command requires a project workspace; 'requiresProject' is false by default
   protected static requiresProject = true;
 
   public async run(): Promise<AnyJson> {
     const project: SfdxProject = await SfdxProject.resolve();
     const projectJson: SfdxProjectJson = (await project.resolveProjectConfig()) as unknown as SfdxProjectJson;
+    console.log(JSON.stringify(projectJson));
+    console.log(projectJson);
     const packageDirectories: NamedPackageDir[] = (await projectJson.getPackageDirectories()) as NamedPackageDir[];
 
     for (const packageConfig of packageDirectories) {
       // eslint-disable-next-line no-console
-      console.log('sfdx force:source:deploy -u ' + this.flags.username + ' ' + this.flags.options + ' --sourcepath ' + packageConfig.fullPath);
-      await exec('sfdx force:source:deploy -u ' + this.flags.username + ' ' + this.flags.options + ' --sourcepath ' + packageConfig.fullPath);
+      console.log('sfdx force:source:deploy ' + this.flags.options + ' --sourcepath ' + packageConfig.fullPath);
+      await exec('sfdx force:source:deploy -u ' + this.flags.options + ' --sourcepath ' + packageConfig.fullPath);
     }
     return;
   }

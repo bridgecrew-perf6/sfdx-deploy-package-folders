@@ -21,7 +21,7 @@ $ npm install -g sfdx-deploy-package-folders
 $ sfdx COMMAND
 running command...
 $ sfdx (-v|--version|version)
-sfdx-deploy-package-folders/0.0.5 win32-x64 node-v16.7.0
+sfdx-deploy-package-folders/0.0.6 win32-x64 node-v16.7.0
 $ sfdx --help [COMMAND]
 USAGE
   $ sfdx COMMAND
@@ -29,16 +29,16 @@ USAGE
 ```
 <!-- usagestop -->
 <!-- commands -->
-* [`sfdx package:directory:deploy [-p <string>] [-o <string>] [-u <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-packagedirectorydeploy--p-string--o-string--u-string---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
+* [`sfdx package:directory:deploy [-p <string>] [-o <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-packagedirectorydeploy--p-string--o-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
 
-## `sfdx package:directory:deploy [-p <string>] [-o <string>] [-u <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
+## `sfdx package:directory:deploy [-p <string>] [-o <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
 
 Deploy (sfdx force:source:deploy) package folders as described in the sfdx-project.json file, sequentially as defined in the project file
 
 ```
 USAGE
-  $ sfdx package:directory:deploy [-p <string>] [-o <string>] [-u <string>] [--apiversion <string>] [--json] [--loglevel
-   trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
+  $ sfdx package:directory:deploy [-p <string>] [-o <string>] [--json] [--loglevel 
+  trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
 
 OPTIONS
   -o, --options=options                                                             any additional parameters to pass
@@ -47,12 +47,6 @@ OPTIONS
   -p, --project=project                                                             [default: sfdx-project.json] the
                                                                                     sfdx project json to use - will
                                                                                     retrieve package directories
-
-  -u, --targetusername=targetusername                                               username or alias for the target
-                                                                                    org; overrides default target org
-
-  --apiversion=apiversion                                                           override the api version used for
-                                                                                    api requests made by this command
 
   --json                                                                            format output as json
 
@@ -63,7 +57,7 @@ EXAMPLE
   sfdx package:directory:deploy --project sfdx-project.json --options "--wait 60 --checkonly"
 ```
 
-_See code: [src/commands/package/directory/deploy.ts](https://github.com/phil-apexology/sfdx-deploy-package-folders/blob/v0.0.5/src/commands/package/directory/deploy.ts)_
+_See code: [src/commands/package/directory/deploy.ts](https://github.com/phil-apexology/sfdx-deploy-package-folders/blob/v0.0.6/src/commands/package/directory/deploy.ts)_
 <!-- commandsstop -->
 <!-- debugging-your-plugin -->
 # Debugging your plugin
