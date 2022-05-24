@@ -1,0 +1,8 @@
+{
+  "commandDescription": "Deploy (sfdx force:source:deploy) package folders as described in the sfdx-project.json file, sequentially as defined in the project file",
+  "projectFlagDescription": "the sfdx project json to use - will retrieve package directories",
+  "optionsFlagDescription": "any additional parameters to pass through to the deploy command",
+  "examples": [
+    "sfdx package:directory:deploy --project sfdx-project.json --options \"--wait 60 --checkonly\""
+  ]
+}
