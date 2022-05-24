@@ -100,7 +100,7 @@ export default class Org extends SfdxCommand {
         name.toLowerCase().indexOf('.cls') >= 0 &&
         name.toLowerCase().indexOf('.cls-meta.xml') === -1
       ) {
-        files.push(file);
+        files.push(file.replace('.cls', ''));
       }
     }
     return files;
