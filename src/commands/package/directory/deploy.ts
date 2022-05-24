@@ -56,6 +56,8 @@ export default class Org extends SfdxCommand {
     const username: string = fs.readFileSync(this.flags.username, { encoding: 'utf-8' });
 
     for (const packageConfig of packageDirectories as string[]) {
+      // eslint-disable-next-line no-console
+      console.log('sfdx force:source:deploy -u ' + username + ' ' + options + ' --sourcepath ' + packageConfig);
       await exec('sfdx force:source:deploy -u ' + username + ' ' + options + ' --sourcepath ' + packageConfig);
     }
     return;
