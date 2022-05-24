@@ -21,7 +21,7 @@ $ npm install -g sfdx-deploy-package-folders
 $ sfdx COMMAND
 running command...
 $ sfdx (-v|--version|version)
-sfdx-deploy-package-folders/0.0.0 win32-x64 node-v16.7.0
+sfdx-deploy-package-folders/0.0.1 win32-x64 node-v16.7.0
 $ sfdx --help [COMMAND]
 USAGE
   $ sfdx COMMAND
@@ -29,26 +29,27 @@ USAGE
 ```
 <!-- usagestop -->
 <!-- commands -->
-* [`sfdx hello:org [-n <string>] [-f] [-v <string>] [-u <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-helloorg--n-string--f--v-string--u-string---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
+* [`sfdx package:directory:deploy [-p <string>] [-o <string>] [-u <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-packagedirectorydeploy--p-string--o-string--u-string---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
 
-## `sfdx hello:org [-n <string>] [-f] [-v <string>] [-u <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
+## `sfdx package:directory:deploy [-p <string>] [-o <string>] [-u <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
 
-print a greeting and your org IDs
+Deploy (sfdx force:source:deploy) package folders as described in the sfdx-project.json file, sequentially as defined in the project file
 
 ```
 USAGE
-  $ sfdx hello:org [-n <string>] [-f] [-v <string>] [-u <string>] [--apiversion <string>] [--json] [--loglevel 
-  trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
+  $ sfdx package:directory:deploy [-p <string>] [-o <string>] [-u <string>] [--apiversion <string>] [--json] [--loglevel
+   trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
 
 OPTIONS
-  -f, --force                                                                       example boolean flag
-  -n, --name=name                                                                   name to print
+  -o, --options=options                                                             any additional parameters to pass
+                                                                                    through to the deploy command
+
+  -p, --project=project                                                             [default: sfdx-project.json] the
+                                                                                    sfdx project json to use - will
+                                                                                    retrieve package directories
 
   -u, --targetusername=targetusername                                               username or alias for the target
                                                                                     org; overrides default target org
-
-  -v, --targetdevhubusername=targetdevhubusername                                   username or alias for the dev hub
-                                                                                    org; overrides default dev hub org
 
   --apiversion=apiversion                                                           override the api version used for
                                                                                     api requests made by this command
@@ -58,12 +59,11 @@ OPTIONS
   --loglevel=(trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL)  [default: warn] logging level for
                                                                                     this command invocation
 
-EXAMPLES
-  sfdx hello:org --targetusername myOrg@example.com --targetdevhubusername devhub@org.com
-  sfdx hello:org --name myname --targetusername myOrg@example.com
+EXAMPLE
+  sfdx package:directory:deploy --project sfdx-project.json --options "--wait 60 --checkonly"
 ```
 
-_See code: [src/commands/hello/org.ts](https://github.com/phil-apexology/sfdx-deploy-package-folders/blob/v0.0.0/src/commands/hello/org.ts)_
+_See code: [src/commands/package/directory/deploy.ts](https://github.com/phil-apexology/sfdx-deploy-package-folders/blob/v0.0.1/src/commands/package/directory/deploy.ts)_
 <!-- commandsstop -->
 <!-- debugging-your-plugin -->
 # Debugging your plugin
