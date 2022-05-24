@@ -5,6 +5,7 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 import * as os from 'os';
+import * as fs from 'fs';
 import * as child from 'child_process';
 import * as util from 'util';
 import { flags, SfdxCommand } from '@salesforce/command';
@@ -34,6 +35,11 @@ export default class Org extends SfdxCommand {
       description: messages.getMessage('projectFlagDescription'),
       default: 'sfdx-project.json',
     }),
+    runpackagetests: flags.string({
+      char: 'r',
+      description: messages.getMessage('runpackagetestsFlagDescription'),
+      default: 'true',
+    }),
     options: flags.string({
       char: 'o',
       description: messages.getMessage('optionsFlagDescription'),
@@ -51,10 +57,52 @@ export default class Org extends SfdxCommand {
     const packageDirectories: NamedPackageDir[] = project.getPackageDirectories();
 
     for (const packageConfig of packageDirectories) {
+      let testOptions: string = '';
+      if (this.flags.runpackagetests as boolean) {
+        const tests: string = this.findTests(packageConfig.path);
+        testOptions = '--testlevel RunSpecifiedTests --runtests "' + tests + '" ';
+      }
+
+      const commandString =
+        'sfdx force:source:deploy ' +
+        (this.flags.options as string) +
+        ' --sourcepath ' +
+        packageConfig.path +
+        ' ' +
+        testOptions;
       // eslint-disable-next-line no-console
-      console.log('sfdx force:source:deploy ' + this.flags.options + ' --sourcepath ' + packageConfig.path);
-      await exec('sfdx force:source:deploy ' + this.flags.options + ' --sourcepath ' + packageConfig.path);
+      console.log(commandString);
+      const output = await exec(commandString);
+      // eslint-disable-next-line no-console
+      console.log(output);
     }
     return;
+  }
+
+  private findTests(dir: string): string {
+    const testFiles: string[] = this.getTestClasses(dir, null);
+    return testFiles.join(',');
+  }
+
+  private getTestClasses(dir: string, filesIn: string[]): string[] {
+    let files: string[] = [];
+    if (filesIn !== null) {
+      files = filesIn;
+    }
+    const currentDirectoryFiles = fs.readdirSync(dir);
+    for (const file of currentDirectoryFiles) {
+      const name = dir + '/' + file;
+      if (fs.statSync(name).isDirectory()) {
+        this.getTestClasses(name, files);
+      } else if (
+        name.toLowerCase().indexOf('/classes/') >= 0 &&
+        (name.toLowerCase().indexOf('/test/') >= 0 || name.toLowerCase().indexOf('/tests/') >= 0) &&
+        name.toLowerCase().indexOf('.cls') >= 0 &&
+        name.toLowerCase().indexOf('.cls-meta.xml') === -1
+      ) {
+        files.push(file);
+      }
+    }
+    return files;
   }
 }
