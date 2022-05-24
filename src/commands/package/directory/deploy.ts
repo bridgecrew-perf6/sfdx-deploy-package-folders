@@ -53,7 +53,7 @@ export default class Org extends SfdxCommand {
     for (const packageConfig of packageDirectories) {
       // eslint-disable-next-line no-console
       console.log('sfdx force:source:deploy ' + this.flags.options + ' --sourcepath ' + packageConfig.path);
-      await exec('sfdx force:source:deploy -u ' + this.flags.options + ' --sourcepath ' + packageConfig.path);
+      await exec('sfdx force:source:deploy ' + this.flags.options + ' --sourcepath ' + packageConfig.path);
     }
     return;
   }

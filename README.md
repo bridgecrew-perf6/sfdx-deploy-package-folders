@@ -21,7 +21,7 @@ $ npm install -g sfdx-deploy-package-folders
 $ sfdx COMMAND
 running command...
 $ sfdx (-v|--version|version)
-sfdx-deploy-package-folders/0.0.7 win32-x64 node-v16.7.0
+sfdx-deploy-package-folders/0.0.8 win32-x64 node-v16.7.0
 $ sfdx --help [COMMAND]
 USAGE
   $ sfdx COMMAND
@@ -57,7 +57,7 @@ EXAMPLE
   sfdx package:directory:deploy --project sfdx-project.json --options "--wait 60 --checkonly"
 ```
 
-_See code: [src/commands/package/directory/deploy.ts](https://github.com/phil-apexology/sfdx-deploy-package-folders/blob/v0.0.7/src/commands/package/directory/deploy.ts)_
+_See code: [src/commands/package/directory/deploy.ts](https://github.com/phil-apexology/sfdx-deploy-package-folders/blob/v0.0.8/src/commands/package/directory/deploy.ts)_
 <!-- commandsstop -->
 <!-- debugging-your-plugin -->
 # Debugging your plugin
