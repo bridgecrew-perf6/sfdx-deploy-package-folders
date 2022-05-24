@@ -8,7 +8,7 @@ import * as os from 'os';
 import * as child from 'child_process';
 import * as util from 'util';
 import { flags, SfdxCommand } from '@salesforce/command';
-import { Messages, SfdxProject, NamedPackageDir } from '@salesforce/core';
+import { Messages, SfdxProject, NamedPackageDir, SfdxProjectJson } from "@salesforce/core";
 import { AnyJson } from '@salesforce/ts-types';
 
 const exec = util.promisify(child.exec);
@@ -48,9 +48,9 @@ export default class Org extends SfdxCommand {
   protected static requiresProject = true;
 
   public async run(): Promise<AnyJson> {
-    const project = await SfdxProject.resolve();
-    const projectJson = await project.resolveProjectConfig();
-    const packageDirectories: NamedPackageDir[] = projectJson.PackageDirectories as NamedPackageDir[]; // tslint:disable-line:no-any
+    const project: SfdxProject = await SfdxProject.resolve();
+    const projectJson: SfdxProjectJson = (await project.resolveProjectConfig()) as unknown as SfdxProjectJson;
+    const packageDirectories: NamedPackageDir[] = (await projectJson.getPackageDirectories()) as NamedPackageDir[];
 
     for (const packageConfig of packageDirectories) {
       // eslint-disable-next-line no-console
