@@ -1,7 +1,7 @@
 {
   "name": "sfdx-deploy-package-folders",
   "description": "Use the sfdx-project.json package folders to force:source:deploy (each one in sequence)",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "author": "Phil Spenceley",
   "bugs": "https://github.com/phil-apexology/sfdx-deploy-package-folders/issues",
   "dependencies": {

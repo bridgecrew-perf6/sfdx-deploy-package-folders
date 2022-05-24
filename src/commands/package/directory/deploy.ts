@@ -5,11 +5,10 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 import * as os from 'os';
-import * as fs from 'fs';
 import * as child from 'child_process';
 import * as util from 'util';
 import { flags, SfdxCommand } from '@salesforce/command';
-import { Messages, SfdxProject } from '@salesforce/core';
+import { Messages, SfdxProject, NamedPackageDir } from '@salesforce/core';
 import { AnyJson } from '@salesforce/ts-types';
 
 const exec = util.promisify(child.exec);
@@ -51,12 +50,12 @@ export default class Org extends SfdxCommand {
   public async run(): Promise<AnyJson> {
     const project = await SfdxProject.resolve();
     const projectJson = await project.resolveProjectConfig();
-    const packageDirectories = projectJson['packageDirectories']; // tslint:disable-line:no-any
+    const packageDirectories: NamedPackageDir[] = projectJson.PackageDirectories as NamedPackageDir[]; // tslint:disable-line:no-any
 
-    for (const packageConfig of packageDirectories as string[]) {
+    for (const packageConfig of packageDirectories) {
       // eslint-disable-next-line no-console
-      console.log('sfdx force:source:deploy -u ' + this.flags.username + ' ' + this.flags.options + ' --sourcepath ' + packageConfig);
-      await exec('sfdx force:source:deploy -u ' + this.flags.username + ' ' + this.flags.options + ' --sourcepath ' + packageConfig);
+      console.log('sfdx force:source:deploy -u ' + this.flags.username + ' ' + this.flags.options + ' --sourcepath ' + packageConfig.fullPath);
+      await exec('sfdx force:source:deploy -u ' + this.flags.username + ' ' + this.flags.options + ' --sourcepath ' + packageConfig.fullPath);
     }
     return;
   }
