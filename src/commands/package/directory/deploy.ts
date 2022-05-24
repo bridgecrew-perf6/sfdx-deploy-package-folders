@@ -8,7 +8,7 @@ import * as os from 'os';
 import * as child from 'child_process';
 import * as util from 'util';
 import { flags, SfdxCommand } from '@salesforce/command';
-import { Messages, SfdxProject, NamedPackageDir, SfdxProjectJson } from "@salesforce/core";
+import { Messages, SfdxProject, NamedPackageDir } from "@salesforce/core";
 import { AnyJson } from '@salesforce/ts-types';
 
 const exec = util.promisify(child.exec);
@@ -46,15 +46,14 @@ export default class Org extends SfdxCommand {
 
   public async run(): Promise<AnyJson> {
     const project: SfdxProject = await SfdxProject.resolve();
-    const projectJson: SfdxProjectJson = (await project.resolveProjectConfig()) as unknown as SfdxProjectJson;
-    console.log(JSON.stringify(projectJson));
-    console.log(projectJson);
-    const packageDirectories: NamedPackageDir[] = (await projectJson.getPackageDirectories()) as NamedPackageDir[];
+    // eslint-disable-next-line no-console
+    console.log(project);
+    const packageDirectories: NamedPackageDir[] = project.getPackageDirectories();
 
     for (const packageConfig of packageDirectories) {
       // eslint-disable-next-line no-console
-      console.log('sfdx force:source:deploy ' + this.flags.options + ' --sourcepath ' + packageConfig.fullPath);
-      await exec('sfdx force:source:deploy -u ' + this.flags.options + ' --sourcepath ' + packageConfig.fullPath);
+      console.log('sfdx force:source:deploy ' + this.flags.options + ' --sourcepath ' + packageConfig.path);
+      await exec('sfdx force:source:deploy -u ' + this.flags.options + ' --sourcepath ' + packageConfig.path);
     }
     return;
   }
